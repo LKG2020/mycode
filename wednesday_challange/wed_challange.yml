@@ -1,0 +1,30 @@
+---
+- name: Wednesday_challenge
+  hosts: planetexpress:!farnsworth
+  gather_facts: yes
+  connection: ansible.builtin.ssh
+  vars_files:
+    - /home/student/mycode/vars/wed_challange_names.yml
+
+  tasks:
+    - name: Add new users to the wednesday group on hosts in planetexpress
+      ansible.builtin.user:
+        name: "{{ item }}"
+        comment: wednesday_group
+        state: present
+        shell: /bin/bash
+        system: no
+        groups: wednesday
+      become: yes
+      loop: "{{ wednesday }}"
+
+
+    - name: Install figlet on ALL machines
+      ansible.builtin.apt:
+        name: figlet
+        state: present
+      become: yes 
+
+    - name: Display completion message
+      ansible.builtin.debug:
+        msg: "I've completed the challange"
