@@ -28,3 +28,12 @@ sw-2
 
 [eosswitches:vars]
 ansible_network_os=eos
+
+[working]
+Bender ansible_user=bender
+Fry ansible_user=fry
+Zoidberg ansible_user=zoidberg
+Indy ansible_user=indy
+
+[working:vars]
+ansible_ssh_pass=alta3

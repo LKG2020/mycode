@@ -1,0 +1,42 @@
+- name: friday
+  hosts: working
+  gather_facts: yes
+  become: yes
+  vars_prompt:
+    - name: favorite_color
+      prompt: "What is your favorite color?"
+      private: no
+      default: "blue"
+
+
+  tasks:
+
+    - name: Ensure the secret directory exists
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/secret/"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: users
+        mode: "0755"
+        
+    - name: Copy a secret.txt over
+      ansible.builtin.copy:
+        src: "/home/student/mycode/fri_challenge/secret.txt"
+        dest: "/home/{{ ansible_user }}/secret/secret.txt"
+        owner: "{{ ansible_user }}"
+        mode: "0644"
+
+    - name: Create a directory name color
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/color/"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: users
+        mode: "0755"
+
+    - name: Copy a secret.txt over
+      ansible.builtin.copy:
+        src: "/home/student/mycode/fri_challenge/color.txt"
+        dest: "/home/{{ ansible_user }}/color/color.txt"
+        owner: "{{ ansible_user }}"
+        mode: "0644"
